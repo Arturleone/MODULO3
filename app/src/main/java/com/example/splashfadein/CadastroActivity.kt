@@ -18,8 +18,7 @@ import com.example.splashfadein.API.Usuario
 
 class CadastroActivity : AppCompatActivity() {
 
-    private val TAG = "CadastroActivity" // Tag para logs
-
+    private val TAG = "CadastroActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,15 +51,21 @@ class CadastroActivity : AppCompatActivity() {
             val inputNameFull = nameFull.text.toString()
             val inputEmail = emailUsuario.text.toString()
             val inputPassword = password.text.toString()
-            val usuario = Usuario(inputNameFull, inputEmail, inputPassword, "MG", 1)
-            cadastrarUsuario(usuario)
-            startActivity(Intent(this, LoginActivity::class.java))
+            if (inputPassword.isNotBlank() && inputEmail.isNotBlank() && inputNameFull.isNotBlank() ) {
+                val usuario = Usuario(inputNameFull, inputEmail, inputPassword, "MG", 1)
+                cadastrarUsuario(usuario)
+        } else {
+            Toast.makeText(this, "Campos Inválidos!", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
     }
 
     private fun cadastrarUsuario(usuario: Usuario) {
         RetrofitClient.usuarioApi.cadastrarUsuario(usuario).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                startActivity(Intent(this@CadastroActivity, LoginActivity::class.java))
             }
             override fun onFailure(call: Call<Void>, t: Throwable) {
             }
