@@ -1,6 +1,6 @@
 package com.example.splashfadein.API
 
-data class LoginResponse(
+data class UserDetails (
     val token: String,
     val email: String,
     val dr: String,
